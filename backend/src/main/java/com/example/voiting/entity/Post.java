@@ -1,5 +1,6 @@
 package com.example.voiting.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Post {
 
     @NonNull
     @Column
+    @JsonIgnore
     private long userId;
 
     @NonNull
