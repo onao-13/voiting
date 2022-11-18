@@ -1,6 +1,5 @@
 package com.example.voiting.service.impl;
 
-import com.example.voiting.dao.VoiceDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.entity.Voice;
 import com.example.voiting.entity.Voiting;
@@ -29,10 +28,15 @@ public class VoiceServiceImpl implements VoiceService {
 
     @Override
     public void sendVoice(Voice voice) {
-        if (voice.getVoice() =="yes") {
-            behind++;
-        } else if (voice.getVoice() == "no") {
-            ahead++;
+        switch (voice.getVoice()) {
+            case "yes":
+                behind++;
+                break;
+            case "no":
+                ahead++;
+                break;
+            default:
+                break;
         }
     }
 
@@ -42,9 +46,7 @@ public class VoiceServiceImpl implements VoiceService {
     @Override
     public Voiting getVoiting(Code code) {
         if (checkCode(code)) {
-            System.out.println(checkCode(code));
             codeService.disableCode(code);
-            System.out.println(checkCode(code));
         }
         return null;
     }
