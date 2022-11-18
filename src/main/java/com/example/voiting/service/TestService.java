@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface TestService {
     List<Post> getTestData();
-    Post getOnePost();
     void addTestData(Post post);
 }
