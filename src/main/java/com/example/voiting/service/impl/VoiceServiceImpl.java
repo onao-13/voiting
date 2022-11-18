@@ -5,6 +5,7 @@ import com.example.voiting.entity.Code;
 import com.example.voiting.entity.Voice;
 import com.example.voiting.entity.Voiting;
 import com.example.voiting.entity.VoitingResult;
+import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,14 @@ public class VoiceServiceImpl implements VoiceService {
     private int behind = 0;
     private int ahead = 0;
 
+    /**
+     * TODO: ADD THIS
+     */
+//    @Autowired
+//    private VoiceDao voiceDao;
+
     @Autowired
-    private VoiceDao voiceDao;
+    private CodeService codeService;
 
     @Override
     public void sendVoice(Voice voice) {
@@ -30,23 +37,25 @@ public class VoiceServiceImpl implements VoiceService {
     }
 
     /**
-     * TODO: UPDATE THIS
+     * TODO: UPDATE THIS, OPTIONAL: Optional<Voiting>
      */
     @Override
     public Voiting getVoiting(Code code) {
         if (checkCode(code)) {
-
+            System.out.println(checkCode(code));
+            codeService.disableCode(code);
+            System.out.println(checkCode(code));
         }
         return null;
+    }
+
+    private boolean checkCode(Code code) {
+        return codeService.checkCode(code);
     }
 
     /**
      * TODO: UPDATE THIS
      */
-    private boolean checkCode(Code code) {
-        return true;
-    }
-
     @Override
     public VoitingResult getVoitingResult(long id) {
         return null;
