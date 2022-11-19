@@ -1,5 +1,6 @@
 package com.example.voiting.controller;
 
+import com.example.voiting.entity.Link;
 import com.example.voiting.entity.Voiting;
 import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoitingService;
@@ -22,10 +23,17 @@ public class VoitingController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/question/{id}")
     ResponseEntity<Voiting> getVoitingById(@PathVariable(name = "id") long id) {
         Optional<Voiting> result = voitingService.getVoitingById(id);
         return result.map(voiting -> ResponseEntity.ok().body(voiting))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/get-link/{id}")
+    ResponseEntity<Link> getLinkById(@PathVariable(name = "id") long id) {
+        Optional<Link> link = voitingService.getVoitingLink(id);
+        return link.map(url -> ResponseEntity.ok().body(url))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

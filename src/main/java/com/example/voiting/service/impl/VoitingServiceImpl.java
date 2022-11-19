@@ -1,10 +1,12 @@
 package com.example.voiting.service.impl;
 
 import com.example.voiting.dao.VoitingDao;
+import com.example.voiting.entity.Link;
 import com.example.voiting.entity.Voiting;
 import com.example.voiting.entity.VoitingResult;
 import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoitingService;
+import com.example.voiting.system.Rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,27 @@ public class VoitingServiceImpl implements VoitingService {
     @Override
     public Optional<VoitingResult> getVoitingResultById(long id) {
         return voitingDao.getResult(id);
+    }
+
+    @Override
+    public Optional<Link> getVoitingLink(long id) {
+        if (isVoitingExist(id)) {
+
+            String url = String.format(
+                    "%s/%s/question/%d",
+                    Rest.BASE_URL,
+                    Rest.VOITING_API,
+                    id
+            );
+            Link link = new Link();
+            link.setUrl(url);
+            return Optional.of(link);
+        }
+        return Optional.empty();
+    }
+
+    private boolean isVoitingExist(long id) {
+        if (voitingDao.checkId(id)) return true;
+        return false;
     }
 }

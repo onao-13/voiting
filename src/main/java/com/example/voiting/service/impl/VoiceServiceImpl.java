@@ -52,7 +52,7 @@ public class VoiceServiceImpl implements VoiceService {
     }
 
     private boolean checkCode(Code code) {
-        return codeService.checkCode(code);
+        return codeService.isCodeActive(code);
     }
 
     /**

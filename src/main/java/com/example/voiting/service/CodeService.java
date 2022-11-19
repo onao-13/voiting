@@ -5,7 +5,7 @@ import com.example.voiting.entity.Code;
 import java.util.ArrayList;
 
 public interface CodeService {
-    boolean checkCode(Code code);
+    boolean isCodeActive(Code code);
     void regenerateAllCodes();
     void regenerateOneCode();
     ArrayList<Code> getAllActiveCodes();

@@ -10,11 +10,7 @@ import java.util.ArrayList;
 public class CodeServiceImpl implements CodeService {
     private ArrayList<Code> activeCodes = new ArrayList<Code>();
 
-    /**
-     * TODO: UPDATE THIS
-     */
-    @Override
-    public boolean checkCode(Code code) {
+    public boolean isCodeActive(Code code) {
         try {
             activeCodes.get(activeCodes.indexOf(code));
             return true;

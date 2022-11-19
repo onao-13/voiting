@@ -9,4 +9,5 @@ public interface VoitingDao {
     void create(Voiting voiting);
     Optional<Voiting> getById(long id);
     Optional<VoitingResult> getResult(long id);
+    boolean checkId(long id);
 }

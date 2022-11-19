@@ -51,6 +51,12 @@ public class VoitingDaoImpl implements VoitingDao {
         }
     }
 
+    @Override
+    public boolean checkId(long id) {
+        if (id <= count && id > 0) return true;
+        return false;
+    }
+
     private void getDocumentCount() {
         try {
             ApiFuture<QuerySnapshot> snapshot = voitingRef.get();
