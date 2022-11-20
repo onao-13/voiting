@@ -7,5 +7,5 @@ import com.example.voiting.entity.VoitingResult;
 
 public interface VoiceService {
     void sendVoice(Voice voice);
-    boolean checkCode(Code code);
+    boolean checkCode(int code, long id);
 }

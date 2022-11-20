@@ -25,7 +25,7 @@ public class VoitingServiceImpl implements VoitingService {
     @Override
     public void createVoiting(Voiting voiting) {
         voitingDao.create(voiting);
-        codeService.regenerateAllCodes();
+        codeService.createAndGenerateCodes();
     }
 
     @Override

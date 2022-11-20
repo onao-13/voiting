@@ -1,10 +1,12 @@
 package com.example.voiting.entity;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Code {
-    private int code;
+    private long code;
 }

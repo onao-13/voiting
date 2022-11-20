@@ -26,22 +26,25 @@ public class VoiceServiceImpl implements VoiceService {
     @Autowired
     private CodeService codeService;
 
+    /**
+     * TODO: UPDATE THIS
+     */
     @Override
     public void sendVoice(Voice voice) {
-        switch (voice.getVoice()) {
-            case "yes":
-                behind++;
-                break;
-            case "no":
-                ahead++;
-                break;
-            default:
-                break;
-        }
+//        switch (voice.getVoice()) {
+//            case "yes":
+//                behind++;
+//                break;
+//            case "no":
+//                ahead++;
+//                break;
+//            default:
+//                break;
+//        }
     }
 
-    public boolean checkCode(Code code) {
-        if (codeService.isCodeActive(code)) {
+    public boolean checkCode(int code, long id) {
+        if (codeService.isCodeActive(Code.builder().code(code).build(), id)) {
             return true;
         }
         return false;
