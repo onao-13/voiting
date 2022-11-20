@@ -8,6 +8,7 @@ import com.example.voiting.service.VoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/api/voice")
@@ -22,15 +23,14 @@ public class VoiceController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * TODO: IS FALSE REDIRECT TO ERROR PAGE
+     */
     @GetMapping("/voiting")
-    ResponseEntity<Voiting> getVoiting(@RequestBody Code code) {
-        Voiting voiting = voiceService.getVoiting(code);
-        return ResponseEntity.ok().body(voiting);
-    }
-
-    @GetMapping("/result/{id}")
-    ResponseEntity<VoitingResult> getVoitingResult(@PathVariable long id) {
-        VoitingResult result = voiceService.getVoitingResult(id);
-        return ResponseEntity.ok().body(result);
+    ModelAndView getVoiting(@RequestBody Code code, Long id) {
+        if (voiceService.checkCode(code)) {
+            return new ModelAndView("redirect:/api/voiting/question/" + id);
+        }
+        return new ModelAndView("redirect:/api/voiting");
     }
 }

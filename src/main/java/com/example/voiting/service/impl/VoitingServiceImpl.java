@@ -7,6 +7,7 @@ import com.example.voiting.entity.VoitingResult;
 import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoitingService;
 import com.example.voiting.system.Rest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

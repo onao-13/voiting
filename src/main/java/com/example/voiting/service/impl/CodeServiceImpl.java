@@ -1,7 +1,9 @@
 package com.example.voiting.service.impl;
 
+import com.example.voiting.dao.CodeDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.service.CodeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 @Service
 public class CodeServiceImpl implements CodeService {
     private ArrayList<Code> activeCodes = new ArrayList<Code>();
+
+    @Autowired
+    private CodeDao codeDao;
 
     public boolean isCodeActive(Code code) {
         try {

@@ -40,26 +40,10 @@ public class VoiceServiceImpl implements VoiceService {
         }
     }
 
-    /**
-     * TODO: UPDATE THIS, OPTIONAL: Optional<Voiting>
-     */
-    @Override
-    public Voiting getVoiting(Code code) {
-        if (checkCode(code)) {
-            codeService.disableCode(code);
+    public boolean checkCode(Code code) {
+        if (codeService.isCodeActive(code)) {
+            return true;
         }
-        return null;
-    }
-
-    private boolean checkCode(Code code) {
-        return codeService.isCodeActive(code);
-    }
-
-    /**
-     * TODO: UPDATE THIS
-     */
-    @Override
-    public VoitingResult getVoitingResult(long id) {
-        return null;
+        return false;
     }
 }
