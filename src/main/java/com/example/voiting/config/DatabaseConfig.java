@@ -1,5 +1,6 @@
 package com.example.voiting.config;
 
+import com.example.voiting.system.Database;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -33,5 +34,10 @@ public class DatabaseConfig {
         return FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(getAccountService()))
             .build();
+    }
+
+    @Bean
+    Database createDb() {
+        return new Database();
     }
 }
