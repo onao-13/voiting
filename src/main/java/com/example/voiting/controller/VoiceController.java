@@ -2,10 +2,13 @@ package com.example.voiting.controller;
 
 import com.example.voiting.entity.*;
 import com.example.voiting.service.VoiceService;
+import com.example.voiting.service.VoitingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/voice")
@@ -13,6 +16,9 @@ public class VoiceController {
 
     @Autowired
     private VoiceService voiceService;
+
+    @Autowired
+    private VoitingService voitingService;
 
     /**
      * TODO: UPDATE VOICE-CONTROLLER
@@ -24,13 +30,23 @@ public class VoiceController {
     }
 
     /**
-     * TODO: IS FALSE REDIRECT TO ERROR PAGE
+     * TODO: UPDATE THIS
      */
-    @GetMapping("/voiting")
-    ModelAndView getVoiting(@RequestBody GetVoiting voiting) {
-        if (voiceService.checkCode(voiting.getCode(), voiting.getId())) {
-            return new ModelAndView("redirect:/api/voiting/question/" + voiting.getId());
-        }
-        return new ModelAndView("redirect:/api/voiting");
+    @GetMapping("/question/{id}")
+    ResponseEntity<Voiting> getVoitingById(@PathVariable(name = "id") long id) {
+        Optional<Voiting> result = voitingService.getVoitingById(id);
+        return result.map(voiting -> ResponseEntity.ok().body(voiting))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    /**
+     * TODO: UPDATE THIS
+     */
+//    @PostMapping("/verification")
+//    ModelAndView getVoiting(@RequestBody GetVoiting voiting) {
+//        if (voiceService.checkCode(voiting.getCode(), voiting.getId())) {
+//            return new ModelAndView("redirect:/api/voice/question/" + voiting.getId());
+//        }
+//        return new ModelAndView("redirect:/api/voiting");
+//    }
 }

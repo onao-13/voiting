@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class VoitingResult {
     private Voiting voiting;
-    private int voitingPercent;
     private int voiceCount;
+    private int forVoiceCount;
+    private int againstVoiceCount;
 }

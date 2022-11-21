@@ -23,7 +23,8 @@ public class VoitingDaoImpl implements VoitingDao {
         Database.VOITING_RESULT_REF.document(String.valueOf(Database.newDocumentId)).create(
             VoitingResult.builder()
                 .voiting(voiting)
-                .voitingPercent(0)
+                .againstVoiceCount(0)
+                .forVoiceCount(0)
                 .voiceCount(30)
                 .build()
         );
