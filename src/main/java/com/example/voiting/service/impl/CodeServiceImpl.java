@@ -3,34 +3,28 @@ package com.example.voiting.service.impl;
 import com.example.voiting.dao.CodeDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.service.CodeService;
+import com.example.voiting.system.Database;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.FieldValue;
+import com.google.cloud.firestore.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * TODO: CREATE THIS
+ */
 @Service
 public class CodeServiceImpl implements CodeService {
-    private List<Code> activeCodes = new ArrayList<Code>();
 
     @Autowired
     private CodeDao codeDao;
 
     public boolean isCodeActive(Code code, long id) {
-
-//        boolean active = false;
-//
-//        for (Object code1 : codes) {
-//            System.out.println(code1);
-//            if (code1 == code) {
-//                System.out.println(code);
-//                active = true;
-//            }
-//        }
-//        System.out.println(active);
-//        if (active) return true;
-
         try {
             List<Code> codes = codeDao.getCodes(id);
             AtomicBoolean result = new AtomicBoolean(false);
@@ -46,17 +40,17 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void createAndGenerateCodes() {
-        codeDao.saveNewCodes(generateCodes(30));
+        codeDao.saveNewCodes(generateCodes(10));
     }
 
     @Override
     public void regenerateAllCodes(long id) {
-
+        codeDao.saveCodes(generateCodes(30), id);
     }
 
     @Override
     public void regenerateOneCode(long id) {
-        activeCodes.add(generate());
+
     }
 
     @Override
@@ -66,12 +60,22 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void disableAllCodes(long id) {
-        activeCodes = new ArrayList<>();
+        try {
+            DocumentReference snapshot = Database.CODE_REF.document(String.valueOf(id));
+            Map<String, Object> codes = new HashMap<>();
+            codes.put("codes", FieldValue.delete());
+            ApiFuture<WriteResult> result = snapshot.update(codes);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    /**
+     * TODO: CREATE THIS
+     */
     @Override
     public void disableCode(Code code, long id) {
-        activeCodes.remove(code);
+//        activeCodes.remove(code);
     }
 
     private Code generate() {

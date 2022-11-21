@@ -15,13 +15,13 @@ public class CodeController {
     @Autowired
     private CodeService codeService;
 
-    @PostMapping("/regenerate-codes")
+    @PostMapping("/generate-codes")
     ResponseEntity generateCodes() {
 //        codeService.regenerateAllCodes();
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/regenerate-one-code")
+    @PostMapping("/generate-one-code")
     ResponseEntity generateOneCode() {
 //        codeService.regenerateOneCode();
         return ResponseEntity.ok().build();
@@ -32,5 +32,15 @@ public class CodeController {
         return ResponseEntity.ok().body(codeService.getAllActiveCodes(id));
     }
 
+    @PostMapping("/regenerate-codes/{id}")
+    ResponseEntity regenerateAllCodes(@PathVariable("id") Long id) {
+        codeService.regenerateAllCodes(id);
+        return ResponseEntity.ok().build();
+    }
 
+    @PostMapping("/disable-codes/{id}")
+    ResponseEntity disableAllCodes(@PathVariable("id") Long id) {
+        codeService.disableAllCodes(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -22,12 +22,14 @@ public class CodeDaoImpl implements CodeDao {
 
     @Override
     public void saveCodes(List<Code> codes, long id) {
-
+        Map<String, List<Code>> docCodes = new HashMap<>();
+        docCodes.put("codes", codes);
+        Database.CODE_REF.document(String.valueOf(id)).set(docCodes);
     }
 
     @Override
     public void saveCode(Code code, long id) {
-
+        Map<String, List<Code>> docCodes = new HashMap<>();
     }
 
     /**
