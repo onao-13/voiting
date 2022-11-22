@@ -3,9 +3,7 @@ package com.example.voiting.dao.impl;
 import com.example.voiting.dao.CodeDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.system.Database;
-import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,7 +15,7 @@ public class CodeDaoImpl implements CodeDao {
     public void saveNewCodes(List<Code> codes) {
         Map<String, List<Code>> docCodes = new HashMap<String, List<Code>>();
         docCodes.put("codes", codes);
-        Database.CODE_REF.document(String.valueOf(Database.newDocumentId)).set(docCodes);
+        Database.CODE_REF.document(String.valueOf(Database.getNewDocumentId())).set(docCodes);
     }
 
     @Override

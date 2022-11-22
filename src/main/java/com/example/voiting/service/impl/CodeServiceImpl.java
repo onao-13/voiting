@@ -37,7 +37,7 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public void createAndGenerateCodes() {
-        codeDao.saveNewCodes(generateCodes(10));
+        codeDao.saveNewCodes(generateCodes(30));
     }
 
     @Override
