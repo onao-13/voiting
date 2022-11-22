@@ -8,6 +8,8 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -24,6 +26,20 @@ public class VoitingDaoImpl implements VoitingDao {
         Database.VOITING_REF.document(String.valueOf(id)).delete();
         Database.VOITING_RESULT_REF.document(String.valueOf(id)).delete();
         Database.CODE_REF.document(String.valueOf(id)).delete();
+    }
+
+    /**
+     * TODO: FIX THIS
+     */
+    @Override
+    public void update(long id, Voiting voiting) {
+        DocumentReference ref = Database.VOITING_REF.document(String.valueOf(id));
+        Map<String, Object> updatedVoiting = new HashMap<>();
+        updatedVoiting.put("title", voiting.getTitle());
+        updatedVoiting.put("name", voiting.getName());
+        updatedVoiting.put("description", voiting.getDescription());
+        updatedVoiting.put("date", voiting.getDate());
+        ApiFuture<WriteResult> updates = ref.update(updatedVoiting);
     }
 
     private void createResultFile(Voiting voiting) {

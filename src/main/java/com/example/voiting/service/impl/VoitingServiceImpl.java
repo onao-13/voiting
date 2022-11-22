@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * TODO: ADD ID IN DOCUMENT
+ */
 @Service
 public class VoitingServiceImpl implements VoitingService {
 
@@ -31,6 +34,11 @@ public class VoitingServiceImpl implements VoitingService {
     @Override
     public void deleteVoiting(long id) {
         voitingDao.delete(id);
+    }
+
+    @Override
+    public void updateVoiting(long id, Voiting voiting) {
+        voitingDao.update(id, voiting);
     }
 
     @Override

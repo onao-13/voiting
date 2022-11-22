@@ -29,21 +29,26 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<Event>();
         for (int id = 1; id <= Database.getSize(); id++) {
-            VoitingResult result = voitingService.getVoitingResultById(id).get();
-            Link link = voitingService.getVoitingLink(id).get();
-            
-            events.add(Event.builder()
-                            .id(id)
-                            .title(result.getTitle())
-                            .name(result.getName())
-                            .description(result.getDescription())
-                            .date(result.getDate())
-                            .link(link.getUrl())
-                            .total(result.getVoiceCount())
-                            .voteFor(result.getForVoiceCount())
-                            .voteAgainst(result.getAgainstVoiceCount())
-                            .passwords(codeService.getAllActiveCodes(id))
-                    .build());
+            if (voitingService.getVoitingResultById(id).isPresent()) {
+                System.out.println("ok");
+                VoitingResult result = voitingService.getVoitingResultById(id).get();
+                Link link = voitingService.getVoitingLink(id).get();
+
+                events.add(Event.builder()
+                                .id(id)
+                                .title(result.getTitle())
+                                .name(result.getName())
+                                .description(result.getDescription())
+                                .date(result.getDate())
+                                .link(link.getUrl())
+                                .total(result.getVoiceCount())
+                                .voteFor(result.getForVoiceCount())
+                                .voteAgainst(result.getAgainstVoiceCount())
+                                .passwords(codeService.getAllActiveCodes(id))
+                        .build());
+            } else {
+                continue;
+            }
         }
         return events;
     }

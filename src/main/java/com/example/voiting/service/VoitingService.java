@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface VoitingService {
     void createVoiting(Voiting voiting);
     void deleteVoiting(long id);
+    void updateVoiting(long id, Voiting voiting);
     Optional<Voiting> getVoitingById(long id);
     Optional<VoitingResult> getVoitingResultById(long id);
     Optional<Link> getVoitingLink(long id);

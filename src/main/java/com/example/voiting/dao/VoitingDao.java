@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface VoitingDao {
     void create(Voiting voiting);
     void delete(long id);
+    void update(long id, Voiting voiting);
     Optional<Voiting> getById(long id);
     Optional<VoitingResult> getResult(long id);
     boolean checkId(long id);

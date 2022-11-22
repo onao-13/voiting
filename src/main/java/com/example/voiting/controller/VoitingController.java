@@ -2,6 +2,7 @@ package com.example.voiting.controller;
 
 import com.example.voiting.entity.Link;
 import com.example.voiting.entity.Voiting;
+import com.example.voiting.entity.VoitingResult;
 import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoitingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class VoitingController {
     @DeleteMapping("/delete/{id}")
     ResponseEntity deleteVoiting(@PathVariable("id") Long id) {
         voitingService.deleteVoiting(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/update/{id}")
+    ResponseEntity updateVoiting(@PathVariable("id") Long id, @RequestBody Voiting voiting) {
+        voitingService.updateVoiting(id, voiting);
         return ResponseEntity.ok().build();
     }
 
