@@ -23,12 +23,12 @@ public class EventServiceImpl implements EventService {
     private VoitingService voitingService;
 
     /**
-     * TODO: UPDATE THIS
+     * TODO: OPTIMIZE
      */
     @Override
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<Event>();
-        for (int id = 1; id <= Database.size; id++) {
+        for (int id = 1; id <= Database.getSize(); id++) {
             VoitingResult result = voitingService.getVoitingResultById(id).get();
             Link link = voitingService.getVoitingLink(id).get();
             

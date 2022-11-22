@@ -41,6 +41,9 @@ public class VoitingDaoImpl implements VoitingDao {
         }
     }
 
+    /**
+     * TODO: OPTIMIZE THIS
+     */
     @Override
     public Optional<VoitingResult> getResult(long id) {
         try {

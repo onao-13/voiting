@@ -52,9 +52,4 @@ public class DatabaseConfig {
             .setCredentials(GoogleCredentials.fromStream(getAccountService()))
             .build();
     }
-
-    @Bean
-    Database createDb() {
-        return new Database();
-    }
 }

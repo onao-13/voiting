@@ -23,10 +23,10 @@ public class VoitingController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/get-link/{id}")
-    ResponseEntity<Link> getLinkById(@PathVariable(name = "id") long id) {
-        Optional<Link> link = voitingService.getVoitingLink(id);
-        return link.map(url -> ResponseEntity.ok().body(url))
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+//    @GetMapping("/get-link/{id}")
+//    ResponseEntity<Link> getLinkById(@PathVariable(name = "id") long id) {
+//        Optional<Link> link = voitingService.getVoitingLink(id);
+//        return link.map(url -> ResponseEntity.ok().body(url))
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 }
