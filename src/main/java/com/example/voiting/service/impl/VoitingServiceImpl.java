@@ -29,6 +29,11 @@ public class VoitingServiceImpl implements VoitingService {
     }
 
     @Override
+    public void deleteVoiting(long id) {
+        voitingDao.delete(id);
+    }
+
+    @Override
     public Optional<Voiting> getVoitingById(long id) {
         return voitingDao.getById(id);
     }

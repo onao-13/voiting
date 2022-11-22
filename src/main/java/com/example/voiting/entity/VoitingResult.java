@@ -1,14 +1,17 @@
 package com.example.voiting.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Builder
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class VoitingResult {
-    private Voiting voiting;
+    private String title;
+    private String name;
+    private String description;
+    private String date;
     private long voiceCount;
     private long forVoiceCount;
     private long againstVoiceCount;

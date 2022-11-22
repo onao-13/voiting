@@ -8,7 +8,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -16,18 +15,28 @@ public class VoitingDaoImpl implements VoitingDao {
 
     @Override
     public void create(Voiting voiting) {
-        Database.VOITING_REF.document(String.valueOf(Database.newDocumentId)).set(voiting);
+        Database.VOITING_REF.document(String.valueOf(Database.setNewDocumentId())).set(voiting);
         createResultFile(voiting);
     }
 
+    @Override
+    public void delete(long id) {
+        Database.VOITING_REF.document(String.valueOf(id)).delete();
+        Database.VOITING_RESULT_REF.document(String.valueOf(id)).delete();
+        Database.CODE_REF.document(String.valueOf(id)).delete();
+    }
+
     private void createResultFile(Voiting voiting) {
-        Database.VOITING_RESULT_REF.document(String.valueOf(Database.newDocumentId)).create(
+        Database.VOITING_RESULT_REF.document(String.valueOf(Database.getNewDocumentId())).create(
             VoitingResult.builder()
-                .voiting(voiting)
-                .againstVoiceCount(0)
-                .forVoiceCount(0)
-                .voiceCount(30)
-                .build()
+                    .title(voiting.getTitle())
+                    .name(voiting.getName())
+                    .description(voiting.getDescription())
+                    .date(voiting.getDate())
+                    .againstVoiceCount(0)
+                    .forVoiceCount(0)
+                    .voiceCount(30)
+                    .build()
         );
     }
 
@@ -47,18 +56,12 @@ public class VoitingDaoImpl implements VoitingDao {
     @Override
     public Optional<VoitingResult> getResult(long id) {
         try {
-            DocumentSnapshot snapshot = Database.VOITING_RESULT_REF.document(String.valueOf(id)).get().get();
-            Map<String, Object> voitng = (Map<String, Object>) snapshot.get("voiting");
-            VoitingResult result = VoitingResult.builder()
-                    .voiceCount((Long) snapshot.get("voiceCount"))
-                    .forVoiceCount((Long) snapshot.get("forVoiceCount"))
-                    .againstVoiceCount((Long) snapshot.get("againstVoiceCount"))
-                    .voiting(Voiting.builder()
-                            .name((String) voitng.get("name"))
-                            .date((String) voitng.get("date"))
-                            .rank((String) voitng.get("rank"))
-                            .build())
-                    .build();
+            DocumentReference ref = Database.VOITING_RESULT_REF.document(String.valueOf(id));
+            DocumentSnapshot snapshot = ref.get().get();
+            VoitingResult result = null;
+            if (snapshot.exists()) {
+                result = snapshot.toObject(VoitingResult.class);
+            }
             return Optional.ofNullable(result);
         } catch (Exception e) {
             return Optional.empty();
@@ -67,7 +70,7 @@ public class VoitingDaoImpl implements VoitingDao {
 
     @Override
     public boolean checkId(long id) {
-        if (id <= Database.newDocumentId && id > 0) return true;
+        if (id <= Database.getNewDocumentId() && id > 0) return true;
         return false;
     }
 }
