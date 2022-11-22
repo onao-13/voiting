@@ -16,11 +16,6 @@ import java.util.Map;
 
 @Service
 public class VoiceServiceImpl implements VoiceService {
-    /**
-     * TODO: DELETE THIS
-     */
-    private int behind = 0;
-    private int ahead = 0;
 
     @Autowired
     private CodeService codeService;

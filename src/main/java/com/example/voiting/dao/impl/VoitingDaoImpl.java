@@ -8,6 +8,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -43,8 +44,19 @@ public class VoitingDaoImpl implements VoitingDao {
     @Override
     public Optional<VoitingResult> getResult(long id) {
         try {
-            ApiFuture<DocumentSnapshot> snapshot = Database.VOITING_RESULT_REF.document(String.valueOf(id)).get();
-            return Optional.ofNullable(snapshot.get().toObject(VoitingResult.class));
+            DocumentSnapshot snapshot = Database.VOITING_RESULT_REF.document(String.valueOf(id)).get().get();
+            Map<String, Object> voitng = (Map<String, Object>) snapshot.get("voiting");
+            VoitingResult result = VoitingResult.builder()
+                    .voiceCount((Long) snapshot.get("voiceCount"))
+                    .forVoiceCount((Long) snapshot.get("forVoiceCount"))
+                    .againstVoiceCount((Long) snapshot.get("againstVoiceCount"))
+                    .voiting(Voiting.builder()
+                            .name((String) voitng.get("name"))
+                            .date((String) voitng.get("date"))
+                            .rank((String) voitng.get("rank"))
+                            .build())
+                    .build();
+            return Optional.ofNullable(result);
         } catch (Exception e) {
             return Optional.empty();
         }

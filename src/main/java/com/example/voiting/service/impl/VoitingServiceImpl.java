@@ -45,7 +45,7 @@ public class VoitingServiceImpl implements VoitingService {
             String url = String.format(
                     "%s/%s/question/%d",
                     Rest.BASE_URL,
-                    Rest.VOITING_API,
+                    Rest.VOICE_API,
                     id
             );
             Link link = new Link();

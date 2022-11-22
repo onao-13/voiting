@@ -16,7 +16,9 @@ public final class Database {
     private void initialize() {
         try {
             ApiFuture<QuerySnapshot> snapshot = Database.VOITING_REF.get();
-            newDocumentId = snapshot.get().getDocuments().size() + 1;
+            long dbSize = snapshot.get().getDocuments().size();
+            size = dbSize;
+            newDocumentId = dbSize + 1;
         } catch (Exception e) {
 //            log.info("No documents in database");
             newDocumentId = 1;
@@ -29,4 +31,5 @@ public final class Database {
     public static final CollectionReference VOITING_RESULT_REF = FIRESTORE.collection("voiting-result");
     public static final CollectionReference CODE_REF = FIRESTORE.collection("codes");
     public static long newDocumentId;
+    public static long size;
 }
