@@ -18,5 +18,5 @@ public class Event {
     private long total;
     private long voteFor;
     private long voteAgainst;
-    private List<Code> passwords = new ArrayList<>();
+    private List<Code> passwords;
 }
