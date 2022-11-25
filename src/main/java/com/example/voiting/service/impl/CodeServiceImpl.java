@@ -30,19 +30,21 @@ public class CodeServiceImpl implements CodeService {
             });
             return result.get();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("CodeService: isCodeActive " + e);
             return false;
         }
     }
 
     @Override
-    public void createAndGenerateCodes() {
-        codeDao.saveNewCodes(generateCodes(30));
+    public List<Code> createAndGenerateCodes(long count) {
+        List<Code> codes = generateCodes(count);
+        codeDao.saveNewCodes(codes);
+        return codes;
     }
 
     @Override
-    public void regenerateAllCodes(long id) {
-        codeDao.saveCodes(generateCodes(30), id);
+    public void regenerateAllCodes(long id, long count) {
+        codeDao.saveCodes(generateCodes(count), id);
     }
 
     @Override
@@ -51,28 +53,13 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public List getAllActiveCodes(long id) {
+    public List<Code> getAllActiveCodes(long id) {
         return codeDao.getCodes(id);
     }
 
     @Override
     public void disableAllCodes(long id) {
-        try {
-            DocumentReference snapshot = Database.CODE_REF.document(String.valueOf(id));
-            Map<String, Object> codes = new HashMap<>();
-            codes.put("codes", FieldValue.delete());
-            ApiFuture<WriteResult> result = snapshot.update(codes);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    /**
-     * TODO: CREATE THIS
-     */
-    @Override
-    public void disableCode(Code code, long id) {
-//        activeCodes.remove(code);
+        codeDao.disableAllCodes(id);
     }
 
     private Code generate() {
@@ -83,7 +70,7 @@ public class CodeServiceImpl implements CodeService {
         return code;
     }
 
-    private List<Code> generateCodes(int codeCount) {
+    private List<Code> generateCodes(long codeCount) {
         List<Code> newCodes = new ArrayList<Code>();
         for (int i = 0; i < codeCount; i++) {
             newCodes.add(generate());

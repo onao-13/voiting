@@ -2,6 +2,7 @@ package com.example.voiting.dao.impl;
 
 import com.example.voiting.dao.VoiceDao;
 import com.example.voiting.system.Database;
+import com.example.voiting.system.VoiceData;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import org.springframework.stereotype.Repository;
@@ -15,7 +16,7 @@ public class VoiceDaoImpl implements VoiceDao {
     @Override
     public void saveVoice(Map<String, Object> voice, long id) {
         try {
-            DocumentReference ref = Database.VOITING_RESULT_REF.document(String.valueOf(id));
+            DocumentReference ref = Database.EVENTS_REF.document(String.valueOf(id));
             String voiceKey = "";
             for (Map.Entry<String, Object> entry : voice.entrySet()) {
                 voiceKey = entry.getKey();
@@ -29,19 +30,26 @@ public class VoiceDaoImpl implements VoiceDao {
                 ref.update(voiceKey, voices);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("VoiceDao: saveVoice " + e);
         }
+    }
+
+    @Override
+    public void disableCode(long id) {
+        /**
+         * TODO: CREATE
+         */
     }
 
     private boolean isFreeVoices(DocumentReference ref) {
         try {
             DocumentSnapshot snapshot = ref.get().get();
-            long allVoices = (long) snapshot.get("voiceCount");
-            long forVoices = (long) snapshot.get("forVoiceCount");
-            long againstVoices = (long) snapshot.get("againstVoiceCount");
-            if (allVoices >= forVoices + againstVoices) return true; else return false;
+            long allVoices = (long) snapshot.get(VoiceData.VOICES_COUNT);
+            long forVoices = (long) snapshot.get(VoiceData.VOTE_FOR);
+            long againstVoices = (long) snapshot.get(VoiceData.VOTE_AGAINST);
+            if (allVoices != forVoices + againstVoices) return true; else return false;
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("VoicegDao: isFreeVoices " + e);
         }
         return false;
     }

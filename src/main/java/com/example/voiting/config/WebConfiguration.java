@@ -10,8 +10,8 @@ public class WebConfiguration implements WebMvcConfigurer {
     /*
     * TODO: DELETE THIS
     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*");
-    }
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**").allowedMethods("*");
+//    }
 }

@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface CodeService {
     boolean isCodeActive(Code code, long id);
-    void createAndGenerateCodes();
-    void regenerateAllCodes(long id);
+    List<Code> createAndGenerateCodes(long count);
+    void regenerateAllCodes(long id, long count);
     void regenerateOneCode(long id);
     List<Code> getAllActiveCodes(long id);
     void disableAllCodes(long id);
-    void disableCode(Code code, long id);
 }

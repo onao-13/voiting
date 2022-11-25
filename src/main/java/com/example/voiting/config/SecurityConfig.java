@@ -13,9 +13,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf().disable()
-            .httpBasic(Customizer.withDefaults())
-            .cors().disable()
-            .build();
+                .csrf().disable()
+//                .authorizeHttpRequests(auth ->
+//                        auth.mvcMatchers("/api/voice/")
+//                )
+                .formLogin()
+                .and()
+                .httpBasic(Customizer.withDefaults())
+                .cors().disable()
+                .build();
     }
 }

@@ -3,7 +3,11 @@ package com.example.voiting.dao.impl;
 import com.example.voiting.dao.CodeDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.system.Database;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.FieldValue;
+import com.google.cloud.firestore.WriteResult;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,7 +19,7 @@ public class CodeDaoImpl implements CodeDao {
     public void saveNewCodes(List<Code> codes) {
         Map<String, List<Code>> docCodes = new HashMap<String, List<Code>>();
         docCodes.put("codes", codes);
-        Database.CODE_REF.document(String.valueOf(Database.getNewDocumentId())).set(docCodes);
+        Database.CODE_REF.document(String.valueOf(Database.newDocumentId)).set(docCodes);
     }
 
     @Override
@@ -47,13 +51,20 @@ public class CodeDaoImpl implements CodeDao {
             );
             return codes;
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("CodeDao: getCodes " + e);
             return new ArrayList<>();
         }
     }
 
     @Override
-    public void deleteCode(Code code) {
-
+    public void disableAllCodes(long id) {
+        try {
+            DocumentReference snapshot = Database.CODE_REF.document(String.valueOf(id));
+            Map<String, Object> codes = new HashMap<>();
+            codes.put("codes", FieldValue.delete());
+            snapshot.update(codes);
+        } catch (Exception e) {
+            System.out.println("CodeDao: disableAllCodes " + e);
+        }
     }
 }

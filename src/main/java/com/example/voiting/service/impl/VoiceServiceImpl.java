@@ -5,6 +5,7 @@ import com.example.voiting.entity.Code;
 import com.example.voiting.entity.Voice;
 import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoiceService;
+import com.example.voiting.system.VoiceData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,25 +22,22 @@ public class VoiceServiceImpl implements VoiceService {
     private VoiceDao voiceDao;
 
     @Override
-    public void sendVoice(Voice voice) {
+    public void sendVoice(Voice voice, long id) {
         Map<String, Object> voiceResult = new HashMap<>();
 
         switch (voice.getVoice()) {
-            case "yes": voiceResult.put("forVoiceCount", 1); break;
-            case "no": voiceResult.put("againstVoiceCount", 1); break;
+            case VoiceData.VOICE_FOR: voiceResult.put(VoiceData.VOTE_FOR, 1); break;
+            case VoiceData.VOICE_AGAINST: voiceResult.put(VoiceData.VOTE_AGAINST, 1); break;
         }
 
-        saveVoice(voiceResult, voice.getId());
+        voiceDao.saveVoice(voiceResult, id);
     }
 
-    public boolean checkCode(int code, long id) {
+    public boolean checkCode(long code, long id) {
         if (codeService.isCodeActive(Code.builder().code(code).build(), id)) {
+            voiceDao.disableCode(id);
             return true;
         }
         return false;
-    }
-
-    private void saveVoice(Map<String, Object> voice, long id) {
-        voiceDao.saveVoice(voice, id);
     }
 }

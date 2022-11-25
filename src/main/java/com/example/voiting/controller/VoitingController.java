@@ -1,9 +1,7 @@
 package com.example.voiting.controller;
 
-import com.example.voiting.entity.Link;
+import com.example.voiting.entity.Event;
 import com.example.voiting.entity.Voiting;
-import com.example.voiting.entity.VoitingResult;
-import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoitingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +19,7 @@ public class VoitingController {
     @PostMapping("/create")
     ResponseEntity createVoiting(@RequestBody Voiting voiting) {
         voitingService.createVoiting(voiting);
+        System.out.println("VoitingController: " + voiting.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -31,8 +30,8 @@ public class VoitingController {
     }
 
     @PutMapping("/update/{id}")
-    ResponseEntity updateVoiting(@PathVariable("id") Long id, @RequestBody Voiting voiting) {
-        voitingService.updateVoiting(id, voiting);
+    ResponseEntity updateVoiting(@PathVariable("id") Long id, @RequestBody Event event) {
+        voitingService.updateVoiting(id, event);
         return ResponseEntity.ok().build();
     }
 

@@ -1,11 +1,8 @@
 package com.example.voiting.service;
 
-import com.example.voiting.entity.Code;
 import com.example.voiting.entity.Voice;
-import com.example.voiting.entity.Voiting;
-import com.example.voiting.entity.VoitingResult;
 
 public interface VoiceService {
-    void sendVoice(Voice voice);
-    boolean checkCode(int code, long id);
+    void sendVoice(Voice voice, long id);
+    boolean checkCode(long code, long id);
 }

@@ -11,5 +11,5 @@ public interface CodeDao {
     void saveCodes(List<Code> codes, long id);
     void saveCode(Code code, long id);
     List<Code> getCodes(long id);
-    void deleteCode(Code code);
+    void disableAllCodes(long id);
 }
