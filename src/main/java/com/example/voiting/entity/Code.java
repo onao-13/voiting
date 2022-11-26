@@ -4,7 +4,6 @@ import lombok.*;
 
 @Data
 @ToString
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Code {

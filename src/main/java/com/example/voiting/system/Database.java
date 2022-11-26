@@ -24,9 +24,8 @@ public final class Database {
         }
     }
     private static final Firestore FIRESTORE = FirestoreClient.getFirestore();
-    public static final CollectionReference VOITING_REF = FIRESTORE.collection("voiting");
+    public static final CollectionReference QUESTION_REF = FIRESTORE.collection("questions");
     public static final CollectionReference EVENTS_REF = FIRESTORE.collection("events");
-    public static final CollectionReference CODE_REF = FIRESTORE.collection("codes");
     private static final CollectionReference INFO_REF =  FIRESTORE.collection("info");
     public static long newDocumentId;
 

@@ -19,7 +19,6 @@ public class VoitingController {
     @PostMapping("/create")
     ResponseEntity createVoiting(@RequestBody Voiting voiting) {
         voitingService.createVoiting(voiting);
-        System.out.println("VoitingController: " + voiting.toString());
         return ResponseEntity.ok().build();
     }
 
@@ -34,11 +33,4 @@ public class VoitingController {
         voitingService.updateVoiting(id, event);
         return ResponseEntity.ok().build();
     }
-
-//    @GetMapping("/get-link/{id}")
-//    ResponseEntity<Link> getLinkById(@PathVariable(name = "id") long id) {
-//        Optional<Link> link = voitingService.getVoitingLink(id);
-//        return link.map(url -> ResponseEntity.ok().body(url))
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
 }

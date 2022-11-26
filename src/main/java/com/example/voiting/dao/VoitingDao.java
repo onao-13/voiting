@@ -12,7 +12,6 @@ public interface VoitingDao {
     void delete(long id);
     void update(long id, Event event);
     Optional<Question> getById(long id);
-    Optional<Event> getResult(long id);
     boolean checkId(long id);
     List<Event> getAllResults();
 }

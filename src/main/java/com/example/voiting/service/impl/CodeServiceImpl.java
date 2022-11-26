@@ -3,12 +3,6 @@ package com.example.voiting.service.impl;
 import com.example.voiting.dao.CodeDao;
 import com.example.voiting.entity.Code;
 import com.example.voiting.service.CodeService;
-import com.example.voiting.system.Database;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.FieldValue;
-import com.google.cloud.firestore.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +17,16 @@ public class CodeServiceImpl implements CodeService {
 
     public boolean isCodeActive(Code code, long id) {
         try {
+            Boolean result =false;
             List<Code> codes = codeDao.getCodes(id);
-            AtomicBoolean result = new AtomicBoolean(false);
-            codes.forEach(code1 -> {
-                if (code1.getCode() == code.getCode()) result.set(true);
-            });
-            return result.get();
+            for (Iterator<Code> codesIterator = codes.listIterator(); codesIterator.hasNext();) {
+                if (codesIterator.next().getCode() == code.getCode()) {
+                    result = true;
+                    codesIterator.remove();
+                }
+            }
+            codeDao.update(codes, id);
+            return result;
         } catch (Exception e) {
             System.out.println("CodeService: isCodeActive " + e);
             return false;
@@ -36,30 +34,15 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public List<Code> createAndGenerateCodes(long count) {
-        List<Code> codes = generateCodes(count);
-        codeDao.saveNewCodes(codes);
+    public List<Code> generateCodes(long count) {
+        List<Code> codes = generateCodesByCount(count);
         return codes;
     }
 
     @Override
-    public void regenerateAllCodes(long id, long count) {
-        codeDao.saveCodes(generateCodes(count), id);
-    }
-
-    @Override
-    public void regenerateOneCode(long id) {
-
-    }
-
-    @Override
-    public List<Code> getAllActiveCodes(long id) {
-        return codeDao.getCodes(id);
-    }
-
-    @Override
-    public void disableAllCodes(long id) {
-        codeDao.disableAllCodes(id);
+    public void updateCodes(long count, long id) {
+        List<Code> codes = generateCodes(count);
+        codeDao.update(codes, id);
     }
 
     private Code generate() {
@@ -70,7 +53,7 @@ public class CodeServiceImpl implements CodeService {
         return code;
     }
 
-    private List<Code> generateCodes(long codeCount) {
+    private List<Code> generateCodesByCount(long codeCount) {
         List<Code> newCodes = new ArrayList<Code>();
         for (int i = 0; i < codeCount; i++) {
             newCodes.add(generate());

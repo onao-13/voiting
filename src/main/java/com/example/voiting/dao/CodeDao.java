@@ -8,8 +8,6 @@ import java.util.concurrent.ExecutionException;
 
 public interface CodeDao {
     void saveNewCodes(List<Code> codes);
-    void saveCodes(List<Code> codes, long id);
-    void saveCode(Code code, long id);
     List<Code> getCodes(long id);
-    void disableAllCodes(long id);
+    void update(List<Code> codes, long id);
 }

@@ -1,12 +1,11 @@
 package com.example.voiting.controller;
 
 import com.example.voiting.entity.*;
+import com.example.voiting.service.CodeService;
 import com.example.voiting.service.VoiceService;
 import com.example.voiting.service.VoitingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +24,9 @@ public class VoiceController {
 
     @Autowired
     private VoitingService voitingService;
+
+    @Autowired
+    private CodeService codeService;
 
     /**
      * TODO: UPDATE VOICE-CONTROLLER
@@ -47,11 +49,11 @@ public class VoiceController {
 
 
     /**
-     * TODO: UPDATE THIS
+     * TODO: ADD 404 PAGE
      */
     @PostMapping("/verification/{id}")
-    ModelAndView getVoiting(@PathVariable("id") Long id, @RequestBody Code code) {
-        if (voiceService.checkCode(code.getCode(), id)) {
+    ModelAndView getQuestion(@PathVariable("id") Long id, @RequestBody Code code) {
+        if (codeService.isCodeActive(code, id)) {
             return new ModelAndView("redirect:/api/voice/question/" + id);
         }
         return new ModelAndView("redirect:/api/voiting");

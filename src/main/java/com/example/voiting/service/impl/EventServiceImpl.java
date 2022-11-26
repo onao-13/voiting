@@ -14,14 +14,8 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    private CodeService codeService;
-
-    @Autowired
     private VoitingService voitingService;
 
-    /**
-     * TODO: OPTIMIZE
-     */
     @Override
     public List<Event> getAllEvents() {
         return voitingService.getAllEvents();
