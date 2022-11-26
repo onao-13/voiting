@@ -5,8 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class VoitingApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(VoitingApplication.class, args);
+
+		while(true) {
+			long i = 0;
+			i++;
+		}
 	}
 }

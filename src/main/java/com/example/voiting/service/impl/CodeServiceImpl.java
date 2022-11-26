@@ -45,6 +45,11 @@ public class CodeServiceImpl implements CodeService {
         codeDao.update(codes, id);
     }
 
+    @Override
+    public List<Code> getCodes(long id) {
+        return codeDao.getCodes(id);
+    }
+
     private Code generate() {
         Code code = new Code();
         code.setCode(

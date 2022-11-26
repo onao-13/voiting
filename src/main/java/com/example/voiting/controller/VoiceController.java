@@ -6,6 +6,8 @@ import com.example.voiting.service.VoiceService;
 import com.example.voiting.service.VoitingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +18,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/voice")
-//@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true)
 public class VoiceController {
 
     @Autowired
@@ -28,9 +30,6 @@ public class VoiceController {
     @Autowired
     private CodeService codeService;
 
-    /**
-     * TODO: UPDATE VOICE-CONTROLLER
-     */
 //    @PreAuthorize("hasRole('VOTING')")
     @PostMapping("/question/{id}/send")
     ResponseEntity sendVoice(@PathVariable("id") Long id, @RequestBody Voice voice) {
