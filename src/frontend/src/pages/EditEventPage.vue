@@ -83,7 +83,7 @@
 <div class="event__buttons">
  <button class="btn" @click="checkInputs(event)">Сохранить изменения</button>
  <button class="btn" @click="deleteEvent(event)">Удалить ивент</button>
- <button class="btn" @click="$router.push(`/event/${event.id}`)">Посмотреть отчет</button>
+ <button class="btn" @click="$router.push(`/admin/event/${event.id}`)">Посмотреть отчет</button>
 </div>
 </div>
 
@@ -130,7 +130,7 @@ export default {
     }
 
     axios.put(`https://voiting-server.cfapps.us10-001.hana.ondemand.com/api/voiting/update/${event.id}`, newEvent)
-      .then(this.$router.push('/events'))
+      .then(this.$router.push('/admin/events'))
       .then(this.GET_EVENTS_FROM_API())
 
       .catch((error) => {
@@ -141,7 +141,7 @@ export default {
 
   deleteEvent(event) {
     axios.delete(`https://voiting-server.cfapps.us10-001.hana.ondemand.com/api/voiting/delete/${event.id}`)
-      .then(this.$router.push('/events'))
+      .then(this.$router.push('/admin/events'))
       .then(this.GET_EVENTS_FROM_API())
 
       .catch((error) => {
@@ -251,6 +251,11 @@ export default {
     border: 1px solid red;
   }
  }
+
+ @media(max-width: 830px) {
+  justify-content: center;
+  flex-direction: column;
+ }
 }
 
 .form__inputs {
@@ -258,10 +263,18 @@ export default {
  flex-direction: column;
  gap: 10px;
  width: 50%;
+
+ @media(max-width: 830px) {
+  width: 100%;
+ }
 }
 
 .form__textarea {
  width: 50%;
+
+ @media(max-width: 830px) {
+  width: 100%;
+ }
 }
 .event__buttons {
  display: flex;

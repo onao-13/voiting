@@ -7,7 +7,7 @@ import EventsPageItem from '@/components/EventsPageItem'
 
 const routes = [
   {
-    path: '/admin/',
+    path: '/admin',
     name: 'Home',
     component: HomePage
   },

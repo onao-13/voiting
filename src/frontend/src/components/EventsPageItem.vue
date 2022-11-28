@@ -71,11 +71,11 @@ export default {
   },
 
   createChart() {
-    // let getEvent = JSON.parse(JSON.stringify(this.event));
+    let getEvent = JSON.parse(JSON.stringify(this.event));
     this.options = {
       data: [
-        { label: 'За', value: 12},
-        { label: 'Против', value: 18},
+        { label: 'За', value: getEvent.voteFor},
+        { label: 'Против', value: getEvent.voteAgainst},
       ],
       series: [
         {
@@ -169,6 +169,12 @@ export default {
 
 .event__button {
   padding: 0 0 0 20px;
+}
+
+canvas {
+  @media(max-width: 670px) {
+    width: 400px;
+  }
 }
 
 </style>

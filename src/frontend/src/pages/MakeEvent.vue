@@ -114,7 +114,7 @@ export default {
     return axios
       .post("https://voiting-server.cfapps.us10-001.hana.ondemand.com/api/voiting/create", event)
       .then(this.GET_EVENTS_FROM_API())
-      .then(this.$router.push('/events'))
+      .then(this.$router.push('/admin/events'))
       .catch((error) => {
         console.log(error)
         return error;

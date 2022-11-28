@@ -2,11 +2,11 @@
  <main-header>Список ивентов</main-header>
   <div class="events__list">
    <div class="event__item" v-for="event in EVENTS" :key="event.id">
-    <router-link class="event__link" :to="`/edit/${event.id}`">
+    <router-link class="event__link" :to="`/admin/edit/${event.id}`">
       {{event.title}}
      </router-link>
    </div>
-  <router-link class="event__item" :to="'/make'">
+  <router-link class="event__item" :to="'/admin/make'">
     <svg width="101" height="101" viewBox="0 0 101 101" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M37.6409 0V37.6409H0V62.7348H37.6409V100.376H62.7348V62.7348H100.376V37.6409H62.7348V0H37.6409Z" fill="black"/>
     </svg>
